@@ -1,8 +1,4 @@
-function* getRandomInt(max) {
-    while (true) {
-        yield Math.floor(Math.random() * max);
-    }
-}
+import {getRandomInt} from "./utils/getRandomInt.js";
 
 /**
  * Shuffles the elements of an array in a custom manner using a unique random integer generator.
@@ -17,6 +13,5 @@ function customShuffle(arr) {
         [arr[j], arr[i]] = [arr[i], arr[j]];
     }
     return arr;
-
 }
 
