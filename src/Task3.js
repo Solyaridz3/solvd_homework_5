@@ -1,22 +1,9 @@
-/**
- * Returns a function that generates a random integer within the given range, ensuring that each generated integer is unique.
- *
- * @param {number} max - The upper bound of the range from which to generate random integers.
- * @return {function} A function that generates a random integer within the given range.
- */
-function getUniqueRandomInt(max) {
-    const used = [];
-    return function getRandomInt() {
-        if (used.length < max) {
-            let value;
-            do {
-                value = Math.floor(Math.random() * max);
-            } while (used.indexOf(value) !== -1);
-            used.push(value);
-            return value;
-        }
+function* getRandomInt(max) {
+    while (true) {
+        yield Math.floor(Math.random() * max);
     }
 }
+
 /**
  * Shuffles the elements of an array in a custom manner using a unique random integer generator.
  *
@@ -24,18 +11,12 @@ function getUniqueRandomInt(max) {
  * @return {Array} A new array with shuffled elements.
  */
 function customShuffle(arr) {
-    if (arr.length === 0) return [];
-    const newArray = [];
-    const createUniqueInt = getUniqueRandomInt(arr.length);
-    let randomIndex = createUniqueInt();
-    while (randomIndex !== undefined) {
-        newArray.push(arr[randomIndex]);
-        randomIndex = createUniqueInt();
+    const randIntGenerator = getRandomInt(arr.length);
+    for (let i = arr.length - 1; i >= 0; i--) {
+        const j = randIntGenerator.next().value;
+        [arr[j], arr[i]] = [arr[i], arr[j]];
     }
-    return newArray;
+    return arr;
+
 }
 
-
-
-const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-console.log(customShuffle(arr));

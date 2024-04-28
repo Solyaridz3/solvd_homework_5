@@ -1,5 +1,12 @@
 import {DeepSet} from "./utils/DeepSet.js";
 
+/**
+ * Filters an array of data and returns only unique values that satisfy a given callback function.
+ *
+ * @param {Array} data - The array of data to filter.
+ * @param {Function} callback - The callback function that determines whether a value is fits.
+ * @return {Array} An array of unique values that satisfy the callback function.
+ */
 function customFilterUnique(data, callback) {
     const uniqueValues = new DeepSet();
     for (const value of data) {
